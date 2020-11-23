@@ -163,17 +163,15 @@ public class TicTacToe{
     	pairMap.put(7,"1,4 8,9 3,5");
     	pairMap.put(8,"7,9 2,5");
     	pairMap.put(9,"3,6 7,8 1,5");
-//    	boolean completeFlag = false;
+
     	for(Integer keyIndex : vacantIndex) {
-    		boolean filledFlag = false;
     		String pairValue[] = pairMap.get(keyIndex).split(" ");
     		for(String pair : pairValue) {
     			String index[] = pair.split(",");
     			int loc1 = Integer.parseInt(index[0]);
-    			int loc2 = Integer.parseInt(index[2]);
+    			int loc2 = Integer.parseInt(index[1]);
     			if(board[loc1] == board[loc2] && board[loc1] == computerInput) {
 					  board[keyIndex] = computerInput;
-					  filledFlag = true;
 					  return true;
 				  }
     		}
@@ -181,6 +179,41 @@ public class TicTacToe{
     	}
     	return false;    	
     	}
+    
+    
+    public boolean blockPlayerWinnig(char computerInput, char playerInput) {
+    	    	ArrayList<Integer> vacantIndex = new ArrayList<>();
+    	    	for(int i = 1; i < 10; i++) {
+    	    		if(board[i] == ' ') {
+    	    			vacantIndex.add(i);
+    	    		}
+    	    	}
+    	    	HashMap<Integer, String> pairMap = new HashMap<>();
+    	    	pairMap.put(1,"2,3 4,7 5,9");
+    	    	pairMap.put(2,"1,3 5,8");
+    	    	pairMap.put(3,"1,2 6,9 5,7");
+    	    	pairMap.put(4,"1,7 5,6");
+    	    	pairMap.put(5,"1,9 4,6 3,7");
+    	    	pairMap.put(6,"3,9 4,5");
+    	    	pairMap.put(7,"1,4 8,9 3,5");
+    	    	pairMap.put(8,"7,9 2,5");
+    	    	pairMap.put(9,"3,6 7,8 1,5");
+
+    	    	for(Integer keyIndex : vacantIndex) {
+    	    		String pairValue[] = pairMap.get(keyIndex).split(" ");
+    	    		for(String pair : pairValue) {
+    	    			String index[] = pair.split(",");
+    	    			int loc1 = Integer.parseInt(index[0]);
+    	    			int loc2 = Integer.parseInt(index[1]);
+    	    			if(board[loc1] == board[loc2] && board[loc1] == playerInput) {
+    						  board[keyIndex] = computerInput;
+    						  return true;
+    					  }
+    	    		}
+    	    		
+    	    	}
+    	    	return false;    	
+    	   }
   
 
 
@@ -195,8 +228,13 @@ public class TicTacToe{
             System.out.println("Player Input " + playerInput);
             System.out.println("Compute Input " + computerInput);
             ticTacToeObj.playerMove(playerInput);
-            String data = ticTacToeObj.winOrTie();
-            System.out.println(data);
+            boolean computerWinnigStatus = ticTacToeObj.computerCheck(computerInput);
+            boolean blockStatus = false;
+            if(!computerWinnigStatus) {
+                    blockStatus = ticTacToeObj.blockPlayerWinnig(computerInput, playerInput);
+            }
+//            String data = ticTacToeObj.winOrTie();
+            System.out.println(blockStatus);
         	
         }
         
