@@ -215,8 +215,18 @@ public class TicTacToe{
     	    	return false;    	
     	   }
   
+    public boolean takeCorner(char computerInput) {
+    	int cornerLocations[] = {1,3,7,9};
+    	for(int location : cornerLocations) {
+    		if(board[location] == ' ') {
+    			board[location] = computerInput;
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
-
+    
     public static void main(String []args){
         TicTacToe ticTacToeObj = new TicTacToe();
         System.out.println(ticTacToeObj.PlayingToss());
