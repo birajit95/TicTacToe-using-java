@@ -226,7 +226,23 @@ public class TicTacToe{
     	return false;
     }
 
-    
+    public boolean takeCenterOrAnyOtherPosition(char computerInput) {
+    	int centerPos = 5;
+    	int sidePos[] = {2,4,6,8};
+    	if(board[centerPos] == ' ') {
+    		board[centerPos] = computerInput;
+    		return true;
+    	}
+    	else {
+    		for(int side : sidePos) {
+    			if(board[side] == ' ') {
+    	    		board[side] = computerInput;
+    	    		return true;
+    	    	}
+    		}
+    		return false;
+    	}
+    }
     public static void main(String []args){
         TicTacToe ticTacToeObj = new TicTacToe();
         System.out.println(ticTacToeObj.PlayingToss());
