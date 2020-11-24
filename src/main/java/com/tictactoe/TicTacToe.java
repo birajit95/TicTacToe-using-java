@@ -1,6 +1,8 @@
 package com.tictactoe;
 
-
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -222,7 +224,11 @@ public class TicTacToe{
     	   }
   
     public boolean takeCorner(char computerInput) {
-    	int cornerLocations[] = {1,3,7,9};
+//    	int cornerLocations[] = {1,3,7,9};
+    	Integer[] cornerLocations = {1,3,7,9};
+    	List<Integer> intList = Arrays.asList(cornerLocations);
+    	Collections.shuffle(intList);
+    	intList.toArray(cornerLocations);
     	for(int location : cornerLocations) {
     		if(board[location] == ' ') {
     			board[location] = computerInput;
@@ -235,7 +241,12 @@ public class TicTacToe{
 
     public boolean takeCenterOrAnyOtherPosition(char computerInput) {
     	int centerPos = 5;
-    	int sidePos[] = {2,4,6,8};
+//    	int sidePos[] = {2,4,6,8};
+    	Integer[] sidePos = {2,4,6,8};
+    	List<Integer> intList = Arrays.asList(sidePos);
+    	Collections.shuffle(intList);
+    	intList.toArray(sidePos);
+    	
     	Random r = new Random();
     	if(board[centerPos] == ' ' && r.nextInt(2) == 0) {
     		board[centerPos] = computerInput;
@@ -382,53 +393,67 @@ public class TicTacToe{
 			    	   			return "GAME-OVER";
 			       		}
        			}
+       	if(this.occupiedBlockCount >= 9) {
+       		System.out.println("\nThe Match is Tied!");
+				return "GAME-OVER";
+       	  }
 	   return String.valueOf(computerInput);
    } 
  
     
     public static void main(String []args) throws InterruptedException{
-    	
-        TicTacToe ticTacToeObj = new TicTacToe();
-        String tossWinner = ticTacToeObj.PlayingToss();
-        tossWinner ="";
-        System.out.println("\nToss Winner :"+tossWinner+"\n");
-        String playerInput;
-        String computerInput;
-        
-        if(tossWinner.equals("player")) {
-        	 while(true) {
-        		 computerInput = null;
-            	 playerInput = ticTacToeObj.playerTurn(computerInput);
-            	 if(playerInput.equals("GAME-OVER")) {
-            		 break;
-            	 	}
-            	 System.out.println("Computer is Moving... ");
-            	 Thread.sleep(2000);
-            	 computerInput = ticTacToeObj.computerTurn(playerInput);
-            	 if(computerInput.equals("GAME-OVER")) {
-            		 break;
-            	 	}
-                  }
-           }
-          else {
-        	 while(true) {
-        		 System.out.println("Computer is Moving... ");
-        		 Thread.sleep(2000);
-        		 playerInput = null;
-        		 computerInput = ticTacToeObj.computerTurn(playerInput);
-            	 if(computerInput.equals("GAME-OVER")) {
-            		 break;
-            	 	}
-            	 
-            	 playerInput = ticTacToeObj.playerTurn(computerInput);
-            	 if(playerInput.equals("GAME-OVER")) {
-            		 break;
-            	 	}
-            	       
-            	}
-        	
-        	}
-           
+//    	Scanner sc = new Scanner(System.in);
+//        TicTacToe ticTacToeObj = new TicTacToe();
+        while(true) {
+        			Scanner sc = new Scanner(System.in);
+        			TicTacToe ticTacToeObj = new TicTacToe();
+			        String tossWinner = ticTacToeObj.PlayingToss();
+			        tossWinner="";
+			        System.out.println("\nToss Winner :"+tossWinner+"\n");
+			        String playerInput;
+			        String computerInput;
+			        
+			        if(tossWinner.equals("player")) {
+			        	 while(true) {
+			        		 computerInput = null;
+			            	 playerInput = ticTacToeObj.playerTurn(computerInput);
+			            	 if(playerInput.equals("GAME-OVER")) {
+			            		 break;
+			            	 	}
+			            	 System.out.println("Computer is Moving... ");
+			            	 Thread.sleep(1000);
+			            	 computerInput = ticTacToeObj.computerTurn(playerInput);
+			            	 if(computerInput.equals("GAME-OVER")) {
+			            		 break;
+			            	 	}
+			                  }
+			           }
+			          else {
+			        	 while(true) {
+			        		 System.out.println("Computer is Moving... ");
+			        		 Thread.sleep(1000);
+			        		 playerInput = null;
+			        		 computerInput = ticTacToeObj.computerTurn(playerInput);
+			            	 if(computerInput.equals("GAME-OVER")) {
+			            		 break;
+			            	 	}
+			            	 
+			            	 playerInput = ticTacToeObj.playerTurn(computerInput);
+			            	 if(playerInput.equals("GAME-OVER")) {
+			            		 break;
+			            	 	}
+			            	       
+			            	}
+			        	
+			        	}
+			        
+			        System.out.print("Want to play Again? y/n?: ");
+			        String input = sc.next();
+			        if(input.toUpperCase().contains("N")) {
+			        	break;
+			        }
+			        
+        }
             
         }
     
